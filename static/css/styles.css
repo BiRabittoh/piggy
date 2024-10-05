@@ -1,0 +1,33 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background-color: beige;
+}
+
+nav > a:link, nav > a:visited {
+    color: blue;
+    margin-right: 10px;
+}
+  
+nav > a:hover, nav > a:active {
+    text-decoration: dotted;
+}
+
+#main-container {
+    margin-top: 20px;
+}
+
+thead {
+    font-weight: bold;
+}
+
+table {
+    width: 100%;
+}
+
+button {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    font-size: 16px;
+}
