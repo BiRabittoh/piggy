@@ -1,0 +1,14 @@
+name: piggy
+
+services:
+  app:
+    build: .
+    image: ghcr.io/birabittoh/piggy:main
+    container_name: piggy
+    restart: unless-stopped
+    ports:
+      - 3000:3000
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ./static:/app/static
+      - ./data:/app/data
