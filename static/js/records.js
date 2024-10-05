@@ -1,15 +1,12 @@
 document.addEventListener('DOMContentLoaded', function () {
     loadRecords();
 
-    document.getElementById('new-record').addEventListener('click', function () {
-        createNewRecord();
-    });
+    document.getElementById('new-record').addEventListener('click', createNewRecord);
 });
 
 const casino = {
     type: 'Arbitraggio',
     description: 'Prova',
-    date: fixDate(new Date()),
     entries: [
         {
             bookmaker_id: 1,
@@ -23,6 +20,7 @@ const casino = {
                     description: "Punta",
                     odds: 200,
                     won: false,
+                    date: new Date().toISOString(),
                 }
             ]
         },
@@ -38,6 +36,7 @@ const casino = {
                     description: "Banca",
                     odds: 195,
                     won: true,
+                    date: new Date().toISOString(),
                 }
             ]
         },
@@ -47,7 +46,6 @@ const casino = {
 const bank = {
     type: 'Bancata',
     description: 'Prova',
-    date: fixDate(new Date()),
     entries: [
         {
             bookmaker_id: 1,
@@ -61,6 +59,7 @@ const bank = {
                     description: "Punta",
                     odds: 133,
                     won: true,
+                    date: new Date().toISOString(),
                 }
             ]
         },
@@ -76,6 +75,7 @@ const bank = {
                     description: "Banca",
                     odds: 135,
                     won: false,
+                    date: new Date().toISOString(),
                 }
             ]
         },
@@ -104,7 +104,7 @@ function loadRecords() {
 
                 const fields = [
                     formatDate(record.created_at),
-                    record.done,
+                    formatDone(record.done, record.id),
                     record.type,
                     record.description,
                     formatDate(record.date),
@@ -113,7 +113,7 @@ function loadRecords() {
 
                 for (const field of fields) {
                     const td = document.createElement('td');
-                    td.innerText = field;
+                    td.innerHTML = field;
                     tr.appendChild(td);
                 }
                 table.appendChild(tr);
@@ -121,18 +121,8 @@ function loadRecords() {
         });
 }
 
-
-
-function createNewRecord() {
-    const recordStr = JSON.stringify(casino);
-    console.log(recordStr);
-
-    fetch('/api/records', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: recordStr
-    }).then(response => response.json())
-        .then(() => loadRecords());
+async function createNewRecord() {
+    await myFetchPOST("/api/records", casino);
+    await myFetchPOST("/api/records", bank)
+    loadRecords();
 }

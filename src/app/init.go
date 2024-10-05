@@ -41,22 +41,35 @@ func InitDB() {
 		log.Println("could not count bookmakers: " + err.Error())
 	}
 	if bookmakersAmount == 0 {
-		err = DB.Create(&Bookmaker{Name: "Test"}).Error
-		if err != nil {
-			log.Fatal(err)
-		}
-		err = DB.Create(&Bookmaker{Name: "Test 2"}).Error
-		if err != nil {
-			log.Fatal(err)
-		}
-		err = DB.Create(&Bookmaker{Name: "Test Exchange", Exchange: true}).Error
-		if err != nil {
-			log.Fatal(err)
-		}
+		InsertSampleData()
 	}
 
 	err = DB.Model(&Bookmaker{}).Where(&Bookmaker{Exchange: true}).Pluck("id", &ExchangeIDs).Error
 	if err != nil {
 		log.Println("could not get exchange ids: " + err.Error())
+	}
+}
+
+func InsertSampleData() {
+	err := DB.Create(&Bookmaker{Name: "First Bookmaker"}).Error
+	if err != nil {
+		log.Fatal(err)
+	}
+	err = DB.Create(&Bookmaker{Name: "Second Bookmaker"}).Error
+	if err != nil {
+		log.Fatal(err)
+	}
+	err = DB.Create(&Bookmaker{Name: "Third Exchange", Exchange: true}).Error
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	err = DB.Create(&Account{Name: "First Account"}).Error
+	if err != nil {
+		log.Fatal(err)
+	}
+	err = DB.Create(&Account{Name: "Second Account"}).Error
+	if err != nil {
+		log.Fatal(err)
 	}
 }

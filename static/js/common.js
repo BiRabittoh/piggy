@@ -30,18 +30,37 @@ function formatDate(dateString) {
     return (new Date(dateString)).toLocaleString(locale);
 }
 
-function fixDate(date) {
-    date.toISOString().split('T')[0]
+function formatDone(value, id) {
+    const input = document.createElement("input");
+    input.type = "checkbox";
+    input.checked = value;
+    input.disabled = true;
+    //input.setAttribute("data-id", id);
+    //input.onchange = undefined;
+    return input.outerHTML;
 }
 
-async function myFetch(url) {
-    res = await fetch(url);
+async function handleFetchResult(res) {
     if (!res.ok) {
-        console.error(res.text())
+        console.error(await res.text())
         return
     }
 
     return await res.json();
+}
+
+async function myFetch(url) {
+    res = await fetch(url);
+    return await handleFetchResult(res);
+}
+
+async function myFetchPOST(url, body) {
+    const res = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: body ? JSON.stringify(body) : undefined,
+    });
+    return await handleFetchResult(res);
 }
 
 async function getRecords() {
