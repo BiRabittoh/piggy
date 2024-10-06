@@ -71,6 +71,11 @@ function getQueryStringID() {
     return Number(new URLSearchParams(window.location.search).get("id") ?? 0);
 }
 
+async function myConfirm(f, id) {
+    if (confirm("Are you sure?")) return await f(id);
+    return false;
+}
+
 async function handleFetchResult(res) {
     if (!res.ok) {
         console.error(await res.text())
@@ -94,39 +99,58 @@ async function myFetchPOST(url, body) {
     return await handleFetchResult(res);
 }
 
+async function myFetchDELETE(url) {
+    const res = await fetch(url, { method: 'DELETE' });
+    return await handleFetchResult(res);
+}
+
 // API calls
 async function getBookmakers() {
     return await myFetch('/api/bookmakers');
-}
-
-async function getAccounts() {
-    return await myFetch('/api/accounts');
-}
-
-async function getRecords() {
-    return await myFetch('/api/records');
 }
 
 async function getBookmaker(id) {
     return await myFetch(`/api/bookmakers/${id}`);
 }
 
-async function getAccount(id) {
-    return await myFetch(`/api/accounts/${id}`);
-}
-
-async function getRecord(id) {
-    return await myFetch(`/api/records/${id}`);
-}
-
 async function saveBookmaker(payload) {
     return await myFetchPOST("/api/bookmakers", payload);
+}
+
+async function deleteBookmaker(id) {
+    return await myFetchDELETE(`/api/bookmakers/${id}`);
+}
+
+
+async function getAccounts() {
+    return await myFetch('/api/accounts');
+}
+
+async function getAccount(id) {
+    return await myFetch(`/api/accounts/${id}`);
 }
 
 async function saveAccount(payload) {
     return await myFetchPOST("/api/accounts", payload);
 }
 
+async function deleteAccount(id) {
+    return await myFetchDELETE(`/api/accounts/${id}`);
+}
+
+
+async function getRecords() {
+    return await myFetch('/api/records');
+}
+
+async function getRecord(id) {
+    return await myFetch(`/api/records/${id}`);
+}
+
 async function saveRecord(payload) {
     return await myFetchPOST("/api/records", payload);
+}
+
+async function deleteRecord(id) {
+    return await myFetchDELETE(`/api/records/${id}`);
 }

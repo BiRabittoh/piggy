@@ -1,9 +1,8 @@
 body {
     font-family: Arial, sans-serif;
-    margin-top: 20px;
+    margin: 20px auto;
     background-color: beige;
     max-width: 800px;
-    margin-inline: auto;
 }
 
 nav > a:link, nav > a:visited {
@@ -44,9 +43,13 @@ table td, table th {
     padding: 10px; /* Adjust the padding value as needed */
 }
 
-button {
+#buttons {
     display: block;
     margin: 20px auto;
+    text-align: center;
+}
+
+button {
     padding: 10px 20px;
     font-size: 16px;
 }

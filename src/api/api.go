@@ -56,6 +56,23 @@ func postBookmakers(w http.ResponseWriter, r *http.Request) {
 	jsonResponse(w, bookmaker)
 }
 
+func deleteBookmakersId(w http.ResponseWriter, r *http.Request) {
+	id, err := getId(r)
+	if err != nil {
+		new400Error(w, err)
+		return
+	}
+
+	err = app.DB.Delete(&app.Bookmaker{}, id).Error
+	if err != nil {
+		log.Println("could not delete bookmaker: " + err.Error())
+		new500Error(w, err)
+		return
+	}
+
+	jsonResponse(w, []uint{id})
+}
+
 func getAccounts(w http.ResponseWriter, r *http.Request) {
 	var accounts []app.Account
 	err := app.DB.Find(&accounts).Error
@@ -104,6 +121,23 @@ func postAccounts(w http.ResponseWriter, r *http.Request) {
 	jsonResponse(w, account)
 }
 
+func deleteAccountsId(w http.ResponseWriter, r *http.Request) {
+	id, err := getId(r)
+	if err != nil {
+		new400Error(w, err)
+		return
+	}
+
+	err = app.DB.Delete(&app.Account{}, id).Error
+	if err != nil {
+		log.Println("could not delete account: " + err.Error())
+		new500Error(w, err)
+		return
+	}
+
+	jsonResponse(w, []uint{id})
+}
+
 func getRecords(w http.ResponseWriter, r *http.Request) {
 	records, _, err := app.GetRecords()
 	if err != nil {
@@ -146,4 +180,21 @@ func postRecords(w http.ResponseWriter, r *http.Request) {
 	}
 
 	jsonResponse(w, record)
+}
+
+func deleteRecordsId(w http.ResponseWriter, r *http.Request) {
+	id, err := getId(r)
+	if err != nil {
+		new400Error(w, err)
+		return
+	}
+
+	err = app.DB.Delete(&app.Record{}, id).Error
+	if err != nil {
+		log.Println("could not delete account: " + err.Error())
+		new500Error(w, err)
+		return
+	}
+
+	jsonResponse(w, []uint{id})
 }

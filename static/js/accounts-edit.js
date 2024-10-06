@@ -2,6 +2,12 @@ document.addEventListener('DOMContentLoaded', function () {
     handleID();
 
     document.getElementById('save').addEventListener('click', submit);
+    
+    if (id === 0) {
+        document.getElementById('delete').style.display = "none";
+    } else {
+        document.getElementById('delete').addEventListener('click', remove);
+    }
 });
 
 let id;
@@ -39,6 +45,12 @@ function buildAccountObject() {
 
 async function submit() {
     if (await saveAccount(buildAccountObject())) {
+        location.href = "/accounts"
+    }
+}
+
+async function remove() {
+    if (await myConfirm(deleteAccount, id)) {
         location.href = "/accounts"
     }
 }

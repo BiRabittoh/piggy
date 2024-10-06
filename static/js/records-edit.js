@@ -2,6 +2,12 @@ document.addEventListener('DOMContentLoaded', function () {
     handleID();
 
     document.getElementById('save').addEventListener('click', submit);
+    
+    if (id === 0) {
+        document.getElementById('delete').style.display = "none";
+    } else {
+        document.getElementById('delete').addEventListener('click', remove);
+    }
 });
 
 let id;
@@ -152,6 +158,12 @@ function buildSubEntriesObject(subEntriesNode) {
 
 async function submit() {
     if (await saveRecord(buildRecordObject())) {
+        location.href = "/records"
+    }
+}
+
+async function remove() {
+    if (await myConfirm(deleteRecord, id)) {
         location.href = "/records"
     }
 }
