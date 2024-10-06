@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+	"strconv"
 )
 
 type APIError struct {
@@ -24,4 +25,13 @@ func new500Error(w http.ResponseWriter, err error) {
 
 func new400Error(w http.ResponseWriter, err error) {
 	http.Error(w, err.Error(), http.StatusBadRequest)
+}
+
+func getId(r *http.Request) (id uint, err error) {
+	v := r.PathValue("id")
+	id64, err := strconv.ParseUint(v, 10, 0)
+	if err != nil {
+		return
+	}
+	return uint(id64), nil
 }

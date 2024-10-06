@@ -1,7 +1,9 @@
 body {
     font-family: Arial, sans-serif;
-    margin: 20px;
+    margin-top: 20px;
     background-color: beige;
+    max-width: 800px;
+    margin-inline: auto;
 }
 
 nav > a:link, nav > a:visited {
@@ -17,12 +19,29 @@ nav > a:hover, nav > a:active {
     margin-top: 20px;
 }
 
+#main-container > input, #edit-container > label {
+    margin-right: 20px;
+}
+
+.record, .entry, .subentry {
+    margin-top: 20px;
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+label {
+    display: inline-block;
+}
+
 thead {
     font-weight: bold;
 }
 
 table {
     width: 100%;
+}
+
+table td, table th {
+    padding: 10px; /* Adjust the padding value as needed */
 }
 
 button {

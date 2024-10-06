@@ -78,6 +78,22 @@ func getRecords(w http.ResponseWriter, r *http.Request) {
 	jsonResponse(w, records)
 }
 
+func getRecordsId(w http.ResponseWriter, r *http.Request) {
+	id, err := getId(r)
+	if err != nil {
+		new400Error(w, err)
+		return
+	}
+
+	record, err := app.GetRecord(id)
+	if err != nil {
+		log.Println("could not get record: " + err.Error())
+		new500Error(w, err)
+	}
+
+	jsonResponse(w, record)
+}
+
 func postRecords(w http.ResponseWriter, r *http.Request) {
 	var record app.Record
 	err := json.NewDecoder(r.Body).Decode(&record)

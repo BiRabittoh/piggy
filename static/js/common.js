@@ -40,6 +40,29 @@ function formatDone(value, id) {
     return input.outerHTML;
 }
 
+function newInputText(label, value, name) {
+    const l = document.createElement("label");
+    const input = document.createElement("input");
+    input.className = name;
+    input.type = "text";
+    input.placeholder = label;
+    input.value = value ?? "";
+    l.innerHTML += label + "<br />";
+    l.appendChild(input);
+    return l;
+}
+
+function newInputCheckbox(label, value, name) {
+    const l = document.createElement("label");
+    const input = document.createElement("input");
+    input.className = name;
+    input.type = "checkbox";
+    input.checked = value ?? false;
+    l.appendChild(input);
+    l.innerHTML += label;
+    return l;
+}
+
 async function handleFetchResult(res) {
     if (!res.ok) {
         console.error(await res.text())

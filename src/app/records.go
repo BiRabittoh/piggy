@@ -109,3 +109,13 @@ func GetRecords() (records []Record, total int, err error) {
 	records, total = FillRecordValues(records)
 	return
 }
+
+func GetRecord(id uint) (record Record, err error) {
+	err = DB.Preload("Entries.SubEntries").First(&record, id).Error
+	if err != nil {
+		return
+	}
+
+	records, _ := FillRecordValues([]Record{record})
+	return records[0], nil
+}

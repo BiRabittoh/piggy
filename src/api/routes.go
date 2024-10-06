@@ -21,6 +21,7 @@ func ListenAndServe() {
 	http.HandleFunc("POST /api/accounts", postAccounts)
 
 	http.HandleFunc("GET /api/records", getRecords)
+	http.HandleFunc("GET /api/records/{id}", getRecordsId)
 	http.HandleFunc("POST /api/records", postRecords)
 
 	log.Println("Serving at " + address + "...")
