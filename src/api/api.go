@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/BiRabittoh/piggy/src/app"
+	"gorm.io/gorm"
 )
 
 func getBookmakers(w http.ResponseWriter, r *http.Request) {
@@ -172,7 +173,7 @@ func postRecords(w http.ResponseWriter, r *http.Request) {
 		new400Error(w, err)
 		return
 	}
-	err = app.DB.Save(&record).Error
+	err = app.DB.Session(&gorm.Session{FullSaveAssociations: true}).Save(&record).Error
 	if err != nil {
 		log.Println("could not save record: " + err.Error())
 		new500Error(w, err)
