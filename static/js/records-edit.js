@@ -72,16 +72,16 @@ function loadEntry(entry) {
     div.appendChild(newInputText("Account ID", entry?.account_id, "entry-account_id"))
 
     // entry.amount
-    div.appendChild(newInputText("Amount", entry?.amount, "entry-amount"))
+    div.appendChild(newInputText("Amount", formatValue(entry?.amount), "entry-amount"))
 
     // entry.refund
-    div.appendChild(newInputText("Refund", entry?.refund, "entry-refund"))
+    div.appendChild(newInputText("Refund", formatValue(entry?.refund), "entry-refund"))
 
     // entry.bonus
-    div.appendChild(newInputText("Bonus", entry?.bonus, "entry-bonus"))
+    div.appendChild(newInputText("Bonus", formatValue(entry?.bonus), "entry-bonus"))
 
     // entry.commission
-    div.appendChild(newInputText("Commission", entry?.commission, "entry-commission"))
+    div.appendChild(newInputText("Commission", formatValue(entry?.commission), "entry-commission"))
 
     // entry.sub_entries
     div.appendChild(loadSubEntries(entry?.sub_entries ?? [null], "entry-subentries"));
@@ -119,13 +119,13 @@ function loadSubEntry(subEntry) {
     div.appendChild(newInputText("Description", subEntry?.description, "subentry-description"));
     
     // subentry.odds
-    div.appendChild(newInputText("Odds", subEntry?.odds, "subentry-odds"))
+    div.appendChild(newInputText("Odds", formatValue(subEntry?.odds), "subentry-odds"))
     
     // subentry.won
     div.appendChild(newInputCheckbox("Won", subEntry?.won, "subentry-won"));
     
     // subentry.date
-    div.appendChild(newInputText("Date", subEntry?.date, "subentry-date"));
+    div.appendChild(newInputText("Date", subEntry?.date ?? new Date().toISOString(), "subentry-date"));
 
     return div;
 }
@@ -155,10 +155,10 @@ function buildEntriesObject(entriesNode) {
             id: +node.getAttribute("data-id"),
             bookmaker_id: +getInputValueFromNode(node, "entry-bookmaker_id"),
             account_id: +getInputValueFromNode(node, "entry-account_id"),
-            amount: +getInputValueFromNode(node, "entry-amount"),
-            refund: +getInputValueFromNode(node, "entry-refund"),
-            bonus: +getInputValueFromNode(node, "entry-bonus"),
-            commission: +getInputValueFromNode(node, "entry-commission"),
+            amount: restoreValue(getInputValueFromNode(node, "entry-amount")),
+            refund: restoreValue(getInputValueFromNode(node, "entry-refund")),
+            bonus: restoreValue(getInputValueFromNode(node, "entry-bonus")),
+            commission: restoreValue(getInputValueFromNode(node, "entry-commission")),
             sub_entries: buildSubEntriesObject(node.getElementsByClassName("entry-subentries")[0]),
         });
     }
@@ -173,7 +173,7 @@ function buildSubEntriesObject(subEntriesNode) {
         result.push({
             id: +node.getAttribute("data-id"),
             description: getInputValueFromNode(node, "subentry-description"),
-            odds: +getInputValueFromNode(node, "subentry-odds"),
+            odds: restoreValue(getInputValueFromNode(node, "subentry-odds")),
             won: getInputValueFromNode(node, "subentry-won"),
             date: getInputValueFromNode(node, "subentry-date"),
         });

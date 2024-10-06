@@ -21,7 +21,12 @@ const locale = "it-IT";
 
 // Cell formatters
 function formatValue(v) {
+    if (v === undefined) return 0;
     return (v / 100).toFixed(2);
+}
+
+function restoreValue(v) {
+    return Number(v) * 100;
 }
 
 function formatCash(v) {
