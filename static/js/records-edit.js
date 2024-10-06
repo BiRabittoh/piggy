@@ -1,18 +1,15 @@
 document.addEventListener('DOMContentLoaded', function () {
     handleID();
 
-    document.getElementById('save').addEventListener('click', saveRecord);
+    document.getElementById('save').addEventListener('click', submit);
 });
 
 let id;
 
 async function handleID() {
-    id = Number(new URLSearchParams(window.location.search).get("id") ?? 0);
-    const record = id === 0 ? null : await myFetch(`/api/records/${id}`);
-
-    document.getElementById("main-container").appendChild(loadRecord(record))
-
-    console.log(record);
+    id = getQueryStringID();
+    const record = id === 0 ? null : await getRecord(id);
+    document.getElementById("main-container").appendChild(loadRecord(record));
 }
 
 function loadRecord(record) {
@@ -153,9 +150,8 @@ function buildSubEntriesObject(subEntriesNode) {
     return result;
 }
 
-async function saveRecord() {
-    const result = await myFetchPOST("/api/records", buildRecordObject());
-    if (result) {
-        alert("Done");
+async function submit() {
+    if (await saveRecord(buildRecordObject())) {
+        location.href = "/records"
     }
 }

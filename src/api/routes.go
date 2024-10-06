@@ -15,9 +15,11 @@ func ListenAndServe() {
 	http.Handle("GET /", http.FileServer(http.Dir("static")))
 
 	http.HandleFunc("GET /api/bookmakers", getBookmakers)
+	http.HandleFunc("GET /api/bookmakers/{id}", getBookmakersId)
 	http.HandleFunc("POST /api/bookmakers", postBookmakers)
 
 	http.HandleFunc("GET /api/accounts", getAccounts)
+	http.HandleFunc("GET /api/accounts/{id}", getAccountsId)
 	http.HandleFunc("POST /api/accounts", postAccounts)
 
 	http.HandleFunc("GET /api/records", getRecords)

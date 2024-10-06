@@ -1,11 +1,11 @@
 document.addEventListener('DOMContentLoaded', function () {
-    loadRecords();
+    loadBookmakers();
 
-    document.getElementById('new-record').addEventListener('click', editRecord);
+    document.getElementById('new-bookmaker').addEventListener('click', editBookmaker);
 });
 
-function editRecord() {
-    let out = "/records/edit/";
+function editBookmaker() {
+    let out = "/bookmakers/edit/";
     const id = this.getAttribute("data-id");
     if (id) {
         out += "?id=" + id;
@@ -13,15 +13,15 @@ function editRecord() {
     location.href = out;
 }
 
-function loadRecords() {
-    getRecords().then(records => {
-            const header = document.getElementById('records-header');
-            const table = document.getElementById('records-table');
+function loadBookmakers() {
+    getBookmakers().then(bookmakers => {
+            const header = document.getElementById('bookmakers-header');
+            const table = document.getElementById('bookmakers-table');
             header.innerHTML = '';
             table.innerHTML = '';
 
             const tr = document.createElement('tr');
-            const headers = ["Created", "Done", "Type", "Description", "Date", "Value"];
+            const headers = ["ID", "Created", "Updated", "Name", "Exchange", "Commission"];
 
             for (const header of headers) {
                 const td = document.createElement('td');
@@ -30,18 +30,18 @@ function loadRecords() {
             }
             header.appendChild(tr);
 
-            for (const record of records) {
+            for (const bookmaker of bookmakers) {
                 const tr = document.createElement('tr');
-                tr.setAttribute("data-id", record.id);
-                tr.onclick = editRecord;
+                tr.setAttribute("data-id", bookmaker.id);
+                tr.onclick = editBookmaker;
 
                 const fields = [
-                    formatDate(record.created_at),
-                    formatBoolean(record.done, record.id),
-                    record.type,
-                    record.description,
-                    formatDate(record.date),
-                    formatCash(record.value),
+                    bookmaker.id,
+                    formatDate(bookmaker.created_at),
+                    formatDate(bookmaker.updated_at),
+                    bookmaker.name,
+                    formatBoolean(bookmaker.exchange),
+                    bookmaker.default_commission,
                 ];
 
                 for (const field of fields) {

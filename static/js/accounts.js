@@ -1,11 +1,11 @@
 document.addEventListener('DOMContentLoaded', function () {
-    loadRecords();
+    loadAccounts();
 
-    document.getElementById('new-record').addEventListener('click', editRecord);
+    document.getElementById('new-account').addEventListener('click', editAccount);
 });
 
-function editRecord() {
-    let out = "/records/edit/";
+function editAccount() {
+    let out = "/accounts/edit/";
     const id = this.getAttribute("data-id");
     if (id) {
         out += "?id=" + id;
@@ -13,15 +13,15 @@ function editRecord() {
     location.href = out;
 }
 
-function loadRecords() {
-    getRecords().then(records => {
-            const header = document.getElementById('records-header');
-            const table = document.getElementById('records-table');
+function loadAccounts() {
+    getAccounts().then(accounts => {
+            const header = document.getElementById('accounts-header');
+            const table = document.getElementById('accounts-table');
             header.innerHTML = '';
             table.innerHTML = '';
 
             const tr = document.createElement('tr');
-            const headers = ["Created", "Done", "Type", "Description", "Date", "Value"];
+            const headers = ["ID", "Created", "Updated", "Name"];
 
             for (const header of headers) {
                 const td = document.createElement('td');
@@ -30,18 +30,16 @@ function loadRecords() {
             }
             header.appendChild(tr);
 
-            for (const record of records) {
+            for (const account of accounts) {
                 const tr = document.createElement('tr');
-                tr.setAttribute("data-id", record.id);
-                tr.onclick = editRecord;
+                tr.setAttribute("data-id", account.id);
+                tr.onclick = editAccount;
 
                 const fields = [
-                    formatDate(record.created_at),
-                    formatBoolean(record.done, record.id),
-                    record.type,
-                    record.description,
-                    formatDate(record.date),
-                    formatCash(record.value),
+                    account.id,
+                    formatDate(account.created_at),
+                    formatDate(account.updated_at),
+                    account.name,
                 ];
 
                 for (const field of fields) {

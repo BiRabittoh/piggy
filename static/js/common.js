@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
+// Global constants
 const navPages = [
     { name: "Home", href: "/" },
     { name: "Bookmakers", href: "/bookmakers" },
@@ -18,6 +19,7 @@ const navPages = [
 const currency = "€";
 const locale = "it-IT";
 
+// Cell formatters
 function formatValue(v) {
     return (v / 100).toFixed(2);
 }
@@ -30,16 +32,17 @@ function formatDate(dateString) {
     return (new Date(dateString)).toLocaleString(locale);
 }
 
-function formatDone(value, id) {
+function formatBoolean(value, id) {
     const input = document.createElement("input");
     input.type = "checkbox";
-    input.checked = value;
+    if (value) input.setAttribute("checked", "");
     input.disabled = true;
     //input.setAttribute("data-id", id);
     //input.onchange = undefined;
     return input.outerHTML;
 }
 
+// Input components
 function newInputText(label, value, name) {
     const l = document.createElement("label");
     const input = document.createElement("input");
@@ -57,10 +60,15 @@ function newInputCheckbox(label, value, name) {
     const input = document.createElement("input");
     input.className = name;
     input.type = "checkbox";
-    input.checked = value ?? false;
+    if (value) input.setAttribute("checked", "");
     l.appendChild(input);
     l.innerHTML += label;
     return l;
+}
+
+// Functions
+function getQueryStringID() {
+    return Number(new URLSearchParams(window.location.search).get("id") ?? 0);
 }
 
 async function handleFetchResult(res) {
@@ -86,6 +94,39 @@ async function myFetchPOST(url, body) {
     return await handleFetchResult(res);
 }
 
+// API calls
+async function getBookmakers() {
+    return await myFetch('/api/bookmakers');
+}
+
+async function getAccounts() {
+    return await myFetch('/api/accounts');
+}
+
 async function getRecords() {
     return await myFetch('/api/records');
+}
+
+async function getBookmaker(id) {
+    return await myFetch(`/api/bookmakers/${id}`);
+}
+
+async function getAccount(id) {
+    return await myFetch(`/api/accounts/${id}`);
+}
+
+async function getRecord(id) {
+    return await myFetch(`/api/records/${id}`);
+}
+
+async function saveBookmaker(payload) {
+    return await myFetchPOST("/api/bookmakers", payload);
+}
+
+async function saveAccount(payload) {
+    return await myFetchPOST("/api/accounts", payload);
+}
+
+async function saveRecord(payload) {
+    return await myFetchPOST("/api/records", payload);
 }

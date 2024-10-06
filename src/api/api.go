@@ -20,6 +20,24 @@ func getBookmakers(w http.ResponseWriter, r *http.Request) {
 	jsonResponse(w, bookmakers)
 }
 
+func getBookmakersId(w http.ResponseWriter, r *http.Request) {
+	id, err := getId(r)
+	if err != nil {
+		new400Error(w, err)
+		return
+	}
+
+	var bookmaker app.Bookmaker
+	err = app.DB.First(&bookmaker, id).Error
+	if err != nil {
+		log.Println("could not get bookmaker: " + err.Error())
+		new500Error(w, err)
+		return
+	}
+
+	jsonResponse(w, bookmaker)
+}
+
 func postBookmakers(w http.ResponseWriter, r *http.Request) {
 	var bookmaker app.Bookmaker
 	err := json.NewDecoder(r.Body).Decode(&bookmaker)
@@ -48,6 +66,24 @@ func getAccounts(w http.ResponseWriter, r *http.Request) {
 	}
 
 	jsonResponse(w, accounts)
+}
+
+func getAccountsId(w http.ResponseWriter, r *http.Request) {
+	id, err := getId(r)
+	if err != nil {
+		new400Error(w, err)
+		return
+	}
+
+	var account app.Account
+	err = app.DB.First(&account, id).Error
+	if err != nil {
+		log.Println("could not get account: " + err.Error())
+		new500Error(w, err)
+		return
+	}
+
+	jsonResponse(w, account)
 }
 
 func postAccounts(w http.ResponseWriter, r *http.Request) {
