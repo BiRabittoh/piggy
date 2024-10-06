@@ -43,11 +43,6 @@ func InitDB() {
 	if bookmakersAmount == 0 {
 		InsertSampleData()
 	}
-
-	err = DB.Model(&Bookmaker{}).Where("default_commission > 0").Pluck("id", &ExchangeIDs).Error
-	if err != nil {
-		log.Println("could not get exchange ids: " + err.Error())
-	}
 }
 
 func InsertSampleData() {

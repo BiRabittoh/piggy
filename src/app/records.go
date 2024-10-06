@@ -43,7 +43,7 @@ func (e *Entry) GetValue() (value int) {
 		log.Fatalf("please, update e.Won and e.Odds first")
 	}
 
-	if IsExchange(e.BookmakerID) {
+	if e.Bookmaker.IsExchange() {
 		r := (int(e.Amount) * (int(*e.Odds) - 100)) / 100
 		if *e.Won {
 			value = int(e.Amount) - int(e.Amount)*int(e.Commission)/10000
