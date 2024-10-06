@@ -6,7 +6,7 @@ import (
 
 type Bookmaker struct {
 	ID        uint      `json:"id"`
-	CreatedAt time.Time `json:"created_at"`
+	CreatedAt time.Time `json:"created_at" gorm:"<-:create"`
 	UpdatedAt time.Time `json:"updated_at"`
 
 	Name              string `json:"name" gorm:"not null" `
@@ -15,7 +15,7 @@ type Bookmaker struct {
 
 type Account struct {
 	ID        uint      `json:"id"`
-	CreatedAt time.Time `json:"created_at"`
+	CreatedAt time.Time `json:"created_at" gorm:"<-:create"`
 	UpdatedAt time.Time `json:"updated_at"`
 
 	Name string `json:"name" gorm:"not null"`
@@ -23,7 +23,7 @@ type Account struct {
 
 type Record struct {
 	ID        uint      `json:"id" gorm:"primaryKey"`
-	CreatedAt time.Time `json:"created_at"`
+	CreatedAt time.Time `json:"created_at" gorm:"<-:create"`
 	UpdatedAt time.Time `json:"updated_at"`
 
 	Done        bool   `json:"done" gorm:"not null"`
@@ -38,7 +38,7 @@ type Record struct {
 
 type Entry struct {
 	ID        uint      `json:"id"`
-	CreatedAt time.Time `json:"created_at"`
+	CreatedAt time.Time `json:"created_at" gorm:"<-:create"`
 	UpdatedAt time.Time `json:"updated_at"`
 
 	RecordID    uint `json:"record_id" gorm:"not null"`
@@ -61,7 +61,7 @@ type Entry struct {
 
 type SubEntry struct {
 	ID        uint      `json:"id"`
-	CreatedAt time.Time `json:"created_at"`
+	CreatedAt time.Time `json:"created_at" gorm:"<-:create"`
 	UpdatedAt time.Time `json:"updated_at"`
 
 	EntryID     uint      `json:"entry_id" gorm:"not null"`
