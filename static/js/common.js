@@ -25,7 +25,13 @@ function formatValue(v) {
 }
 
 function formatCash(v) {
-    return formatValue(v) + currency;
+    if (v === 0) return "-";
+    return `${v > 0 ? "+" : ""}${formatValue(v)}${currency}`;
+}
+
+function formatPercentage(v) {
+    if (v === 0) return "-";
+    return formatValue(v) + "%";
 }
 
 function formatDate(dateString) {

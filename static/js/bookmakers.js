@@ -40,7 +40,7 @@ function loadBookmakers() {
                     formatDate(bookmaker.created_at),
                     formatDate(bookmaker.updated_at),
                     bookmaker.name,
-                    bookmaker.default_commission,
+                    formatPercentage(bookmaker.default_commission),
                 ];
 
                 for (const field of fields) {
