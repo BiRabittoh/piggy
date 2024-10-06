@@ -173,6 +173,16 @@ func postRecords(w http.ResponseWriter, r *http.Request) {
 		new400Error(w, err)
 		return
 	}
+
+	if record.ID != 0 {
+		err = app.DB.Delete(&app.Entry{}, "record_id = ?", record.ID).Error
+		if err != nil {
+			log.Println("could not delete outdated entries: " + err.Error())
+			new500Error(w, err)
+			return
+		}
+	}
+
 	err = app.DB.Session(&gorm.Session{FullSaveAssociations: true}).Save(&record).Error
 	if err != nil {
 		log.Println("could not save record: " + err.Error())

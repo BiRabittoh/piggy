@@ -34,7 +34,7 @@ function loadRecord(record) {
     div.appendChild(newInputCheckbox("Done", record?.done, "record-done"));
 
     // record.entries
-    div.appendChild(loadEntries(record?.entries ?? [null], "record-entries"));
+    div.appendChild(loadEntries(record?.entries ?? [null, null], "record-entries"));
 
     return div;
 }
@@ -42,6 +42,12 @@ function loadRecord(record) {
 function loadEntries(entries, name) {
     const div = document.createElement("div")
     div.className = name;
+
+    const newEntry = document.createElement("button");
+    newEntry.innerText = "Add entry";
+    newEntry.onclick = () => div.appendChild(loadEntry(null));
+    div.appendChild(newEntry);
+
     for (const entry of entries) {
         div.appendChild(loadEntry(entry));
     }
@@ -53,6 +59,11 @@ function loadEntry(entry) {
     div.setAttribute("data-type", "entry");
     div.setAttribute("data-id", entry?.id ?? 0);
     div.classList.add("entry");
+
+    const deleteEntry = document.createElement("button");
+    deleteEntry.innerText = "Delete entry";
+    deleteEntry.onclick = () => div.remove();
+    div.appendChild(deleteEntry);
 
     // entry.bookmaker_id
     div.appendChild(newInputText("Bookmaker ID", entry?.bookmaker_id, "entry-bookmaker_id"))
@@ -81,6 +92,12 @@ function loadEntry(entry) {
 function loadSubEntries(subEntries, name) {
     const div = document.createElement("div")
     div.className = name;
+
+    const newSubEntry = document.createElement("button");
+    newSubEntry.innerText = "Add subentry";
+    newSubEntry.onclick = () => div.appendChild(loadSubEntry(null));
+    div.appendChild(newSubEntry);
+
     for (const subEntry of subEntries) {
         div.appendChild(loadSubEntry(subEntry));
     }
@@ -92,6 +109,11 @@ function loadSubEntry(subEntry) {
     div.setAttribute("data-type", "subentry");
     div.setAttribute("data-id", subEntry?.id ?? 0);
     div.classList.add("subentry");
+
+    const deleteSubEntry = document.createElement("button");
+    deleteSubEntry.innerText = "Delete subentry";
+    deleteSubEntry.onclick = () => div.remove();
+    div.appendChild(deleteSubEntry);
 
     // subentry.description
     div.appendChild(newInputText("Description", subEntry?.description, "subentry-description"));

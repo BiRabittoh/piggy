@@ -6,9 +6,9 @@ import (
 )
 
 func (e *Entry) GetOdds() *uint {
-	v := uint(1)
+	v := uint(100)
 	for _, s := range e.SubEntries {
-		v *= s.Odds
+		v *= s.Odds / 100
 	}
 	return &v
 }
