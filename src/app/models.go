@@ -10,7 +10,6 @@ type Bookmaker struct {
 	UpdatedAt time.Time `json:"updated_at"`
 
 	Name              string `json:"name" gorm:"not null" `
-	Exchange          bool   `json:"exchange" gorm:"not null" `
 	DefaultCommission uint   `json:"default_commission" gorm:"not null"`
 }
 

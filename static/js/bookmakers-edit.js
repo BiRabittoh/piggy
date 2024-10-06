@@ -21,9 +21,6 @@ function loadBookmaker(bookmaker) {
     // bookmaker.name
     div.appendChild(newInputText("Name", bookmaker?.name, "bookmaker-name"));
 
-    // bookmaker.exchange
-    div.appendChild(newInputCheckbox("Exchange", bookmaker?.exchange, "bookmaker-exchange"));
-
     // bookmaker.default_commission
     div.appendChild(newInputText("Commission", bookmaker?.default_commission, "bookmaker-default_commission"));
 
@@ -40,7 +37,6 @@ function buildBookmakerObject() {
     return {
         id: +node.getAttribute("data-id"),
         name: getInputValueFromNode(node, "bookmaker-name"),
-        exchange: getInputValueFromNode(node, "bookmaker-exchange"),
         default_commission: +getInputValueFromNode(node, "bookmaker-default_commission"),
     }
 }

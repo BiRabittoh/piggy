@@ -21,7 +21,7 @@ function loadBookmakers() {
             table.innerHTML = '';
 
             const tr = document.createElement('tr');
-            const headers = ["ID", "Created", "Updated", "Name", "Exchange", "Commission"];
+            const headers = ["ID", "Created", "Updated", "Name", "Commission"];
 
             for (const header of headers) {
                 const td = document.createElement('td');
@@ -40,7 +40,6 @@ function loadBookmakers() {
                     formatDate(bookmaker.created_at),
                     formatDate(bookmaker.updated_at),
                     bookmaker.name,
-                    formatBoolean(bookmaker.exchange),
                     bookmaker.default_commission,
                 ];
 

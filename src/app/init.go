@@ -44,7 +44,7 @@ func InitDB() {
 		InsertSampleData()
 	}
 
-	err = DB.Model(&Bookmaker{}).Where(&Bookmaker{Exchange: true}).Pluck("id", &ExchangeIDs).Error
+	err = DB.Model(&Bookmaker{}).Where("default_commission > 0").Pluck("id", &ExchangeIDs).Error
 	if err != nil {
 		log.Println("could not get exchange ids: " + err.Error())
 	}
@@ -59,7 +59,7 @@ func InsertSampleData() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	err = DB.Create(&Bookmaker{Name: "Third Exchange", Exchange: true}).Error
+	err = DB.Create(&Bookmaker{Name: "Third Exchange", DefaultCommission: 450}).Error
 	if err != nil {
 		log.Fatal(err)
 	}
