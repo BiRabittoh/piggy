@@ -8,7 +8,7 @@ import (
 func (e *Entry) GetOdds() *uint {
 	v := uint(100)
 	for _, s := range e.SubEntries {
-		v *= s.Odds / 100
+		v = v * s.Odds / 100 // for some reason, i can't use *= here
 	}
 	return &v
 }

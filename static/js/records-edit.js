@@ -156,6 +156,9 @@ function buildEntriesObject(entriesNode) {
             bookmaker_id: +getInputValueFromNode(node, "entry-bookmaker_id"),
             account_id: +getInputValueFromNode(node, "entry-account_id"),
             amount: +getInputValueFromNode(node, "entry-amount"),
+            refund: +getInputValueFromNode(node, "entry-refund"),
+            bonus: +getInputValueFromNode(node, "entry-bonus"),
+            commission: +getInputValueFromNode(node, "entry-commission"),
             sub_entries: buildSubEntriesObject(node.getElementsByClassName("entry-subentries")[0]),
         });
     }
