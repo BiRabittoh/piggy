@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
+    // navbar
     const navObject = document.getElementsByTagName("nav")[0];
     for (const page of navPages) {
         const a = document.createElement("a");
@@ -6,6 +7,8 @@ document.addEventListener('DOMContentLoaded', function () {
         a.href = page.href;
         navObject.appendChild(a)
     }
+    // favicon
+    document.getElementsByTagName("head")[0].innerHTML += favicon;
 });
 
 // Global constants
@@ -15,6 +18,7 @@ const navPages = [
     { name: "Accounts", href: "/accounts" },
     { name: "Records", href: "/records" },
 ];
+const favicon = `<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💰</text></svg>">`;
 
 const currency = "€";
 const locale = "it-IT";
@@ -90,6 +94,20 @@ function newInputDate(label, value, name) {
     input.placeholder = label;
     input.value = value ?? "";
     flatpickr(input, flatpickrOptions);
+    l.innerHTML += label + "<br />";
+    l.appendChild(input);
+    return l;
+}
+
+function newInputSelect(label, value, name, options) {
+    const l = document.createElement("label");
+    const input = document.createElement("select");
+    input.className = name;
+    input.placeholder = label;
+    for (const o of options) {
+        input.options.add(new Option(o.name, o.id));
+    }
+    input.value = value ?? "";
     l.innerHTML += label + "<br />";
     l.appendChild(input);
     return l;

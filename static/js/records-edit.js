@@ -10,11 +10,15 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
+let accounts = [];
+let bookmakers = [];
 let id;
 
 async function handleID() {
     id = getQueryStringID();
     const record = id === 0 ? null : await getRecord(id);
+    accounts = await getAccounts();
+    bookmakers = await getBookmakers();
     document.getElementById("main-container").appendChild(loadRecord(record));
 }
 
@@ -66,10 +70,10 @@ function loadEntry(entry) {
     div.appendChild(deleteEntry);
 
     // entry.bookmaker_id
-    div.appendChild(newInputText("Bookmaker ID", entry?.bookmaker_id, "entry-bookmaker_id"))
+    div.appendChild(newInputSelect("Bookmaker", entry?.bookmaker_id, "entry-bookmaker_id", bookmakers))
 
     // entry.account_id
-    div.appendChild(newInputText("Account ID", entry?.account_id, "entry-account_id"))
+    div.appendChild(newInputSelect("Account", entry?.account_id, "entry-account_id", accounts))
 
     // entry.amount
     div.appendChild(newInputText("Amount", formatValue(entry?.amount), "entry-amount"))
