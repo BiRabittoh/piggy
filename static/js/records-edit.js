@@ -125,7 +125,7 @@ function loadSubEntry(subEntry) {
     div.appendChild(newInputCheckbox("Won", subEntry?.won, "subentry-won"));
     
     // subentry.date
-    div.appendChild(newInputText("Date", subEntry?.date ?? new Date().toISOString(), "subentry-date"));
+    div.appendChild(newInputDate("Date", subEntry?.date ?? new Date().toISOString(), "subentry-date"));
 
     return div;
 }

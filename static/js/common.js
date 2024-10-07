@@ -19,6 +19,12 @@ const navPages = [
 const currency = "€";
 const locale = "it-IT";
 
+const flatpickrOptions = {
+    enableTime: true,
+    time_24hr: true,
+    dateFormat: "Z",
+};
+
 // Cell formatters
 function formatValue(v) {
     if (v === undefined) return 0;
@@ -74,6 +80,18 @@ function newInputCheckbox(label, value, name) {
     if (value) input.setAttribute("checked", "");
     l.appendChild(input);
     l.innerHTML += label;
+    return l;
+}
+
+function newInputDate(label, value, name) {
+    const l = document.createElement("label");
+    const input = document.createElement("input");
+    input.className = name;
+    input.placeholder = label;
+    input.value = value ?? "";
+    flatpickr(input, flatpickrOptions);
+    l.innerHTML += label + "<br />";
+    l.appendChild(input);
     return l;
 }
 
